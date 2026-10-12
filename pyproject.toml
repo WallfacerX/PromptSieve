@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "promptsieve"
+version = "0.1.0"
+description = "A text-focused prompt inspection reverse proxy"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["fastapi>=0.115,<1", "httpx>=0.27,<1", "pydantic-settings>=2.6,<3", "uvicorn>=0.32,<1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.24,<2", "ruff>=0.9,<1", "build>=1.2,<2"]
+
+[project.scripts]
+promptsieve-eval = "promptsieve.evaluation:main"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "docs", ".github", ".env.example", ".dockerignore", "Dockerfile",
+           "pyproject.toml", "requirements-dev.lock", "README.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
